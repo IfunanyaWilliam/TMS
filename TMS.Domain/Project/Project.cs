@@ -6,12 +6,23 @@
 
     public class Project
     {
+        public Project(
+            Guid id,
+            string name,
+            string description,
+            IEnumerable<Task>? tasks)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            Tasks = tasks;
+        }
         public Guid Id { get; set; }
 
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        public List<Task>? Tasks { get; set; }
+        public IEnumerable<Task>? Tasks { get; set; }
     }
 }

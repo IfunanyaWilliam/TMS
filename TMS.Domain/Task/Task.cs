@@ -4,6 +4,23 @@
     using User;
     public class Task
     {
+        public Task(
+            Guid id,
+            Guid userId,
+            string title,
+            string description,
+            DateTime dueDate,
+            Priority priority,
+            Status status)
+        {
+            Id = id;
+            UserId = userId;
+            Title = title;
+            Description = description;
+            DueDate = dueDate;
+            Priority = priority;
+            Status = status;
+        }
         public Guid Id { get; set; }
 
         public Guid UserId { get; set; }
