@@ -1,7 +1,7 @@
-﻿namespace TMS.Domain.User
+﻿namespace TMS.Infrastructure.Entities
 {
     using System;
-    
+
     public class User
     {
         public Guid Id { get; set; }

@@ -1,16 +1,16 @@
-﻿namespace TMS.Domain.Project
+﻿namespace TMS.Domain.User
 {
     using System;
     using System.Collections.Generic;
     using Task;
 
-    public class Project
+    public class UserTask
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public Guid UserId { get; set; }
 
-        public string Description { get; set; }
+        public User User { get; set; }
 
         public List<Task>? Tasks { get; set; }
     }

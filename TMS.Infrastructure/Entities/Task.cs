@@ -2,9 +2,15 @@
 {
     using System;
     using Domain.Task;
+    using TMS.Domain.User;
+
     public class Task
     {
         public Guid Id { get; set; }
+
+        public Guid UserId { get; set; }
+
+        public User Owner { get; set; }
 
         public string Title { get; set; }
 

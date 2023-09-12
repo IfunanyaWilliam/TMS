@@ -1,8 +1,7 @@
-﻿namespace TMS.Domain.Project
+﻿namespace TMS.Infrastructure.Entities
 {
     using System;
     using System.Collections.Generic;
-    using Task;
 
     public class Project
     {
