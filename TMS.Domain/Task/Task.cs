@@ -2,11 +2,13 @@
 {
     using System;
     using User;
+    using Project;
     public class Task
     {
         public Task(
             Guid id,
             Guid userId,
+            Guid projectId,
             string title,
             string description,
             DateTime dueDate,
@@ -15,6 +17,7 @@
         {
             Id = id;
             UserId = userId;
+            ProjectId = projectId;
             Title = title;
             Description = description;
             DueDate = dueDate;
@@ -26,6 +29,10 @@
         public Guid UserId { get; set; }
 
         public User Owner { get; set; }
+
+        public Guid ProjectId { get; set; }
+
+        public Project Project { get; set; }
 
         public string Title { get; set; }
 

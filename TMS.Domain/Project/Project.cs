@@ -9,13 +9,11 @@
         public Project(
             Guid id,
             string name,
-            string description,
-            IEnumerable<Task>? tasks)
+            string description)
         {
             Id = id;
             Name = name;
             Description = description;
-            Tasks = tasks;
         }
         public Guid Id { get; set; }
 
