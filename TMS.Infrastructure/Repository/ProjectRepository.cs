@@ -57,7 +57,7 @@
             if (id == Guid.Empty)
                 return null;
 
-            var project = await _context.Projects.FirstOrDefaultAsync(i => i.Id == id);
+            var project = await _context.Projects.FindAsync(id);
 
             return new Project(
                 id: project.Id,
@@ -87,7 +87,7 @@
             if (id == Guid.Empty || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(description))
                 return false;
 
-            var existingProject = await _context.Projects.FirstOrDefaultAsync(p => p.Id == id);
+            var existingProject = await _context.Projects.FindAsync(id);
 
             if(existingProject == null)
                 return false;

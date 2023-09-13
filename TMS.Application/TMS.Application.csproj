@@ -6,4 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\UserTask\" />
+    <Folder Include="Commands\User\" />
+    <Folder Include="Commands\Task\" />
+    <Folder Include="Commands\Project\" />
+    <Folder Include="Queries\UserTask\" />
+    <Folder Include="Queries\User\" />
+    <Folder Include="Queries\Task\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TMS.Domain\TMS.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

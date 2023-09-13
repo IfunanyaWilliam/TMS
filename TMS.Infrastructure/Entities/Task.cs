@@ -10,6 +10,10 @@
 
         public Guid UserId { get; set; }
 
+        public Guid ProjectId { get; set; }
+
+        public Project Project { get; set; }
+
         public User Owner { get; set; }
 
         public string Title { get; set; }
