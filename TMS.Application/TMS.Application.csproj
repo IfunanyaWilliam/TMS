@@ -10,7 +10,6 @@
     <Folder Include="Commands\UserTask\" />
     <Folder Include="Commands\User\" />
     <Folder Include="Commands\Task\" />
-    <Folder Include="CommandHandlers\" />
     <Folder Include="Queries\Project\" />
     <Folder Include="QueryHandlers\" />
     <Folder Include="Queries\UserTask\" />
