@@ -11,6 +11,8 @@
 
         public string? Description { get; set; }
 
+        public bool? IsPending { get; set; }
+
         public List<Task>? Tasks { get; set; }
     }
 }

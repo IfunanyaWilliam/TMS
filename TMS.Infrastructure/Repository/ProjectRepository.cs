@@ -32,7 +32,7 @@
                 predicate = s => s.Name.ToLower() == searchParam.ToLower();
             }
             else 
-                predicate = null;
+                predicate = s => s.IsPending == false;
 
             var projects = await _context.Projects
                 .Where(predicate)
@@ -43,7 +43,7 @@
 
             if(!projects.Any() || projects == null)
             {
-                return Enumerable.Empty<Project>();
+                return null;
             }
 
             return projects.Select(p => new Project(

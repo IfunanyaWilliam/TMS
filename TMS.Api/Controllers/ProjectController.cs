@@ -3,6 +3,7 @@
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
     using TMS.Application.Commands.Project;
+    using TMS.Application.Queries.Project;
     using TMS.Domain.Project;
 
     [ApiController]
@@ -15,6 +16,46 @@
         {
             _mediator = mediator;
         }
+
+        /// <summary>
+        ///     PUT: /api/GetAllProjects
+        /// </summary>
+        /// <remarks>
+        ///     Get all projects
+        /// </remarks>
+        /// <param name = "pageNumber" ></ param >
+        /// <param name="pageSize"></param>
+        /// <param name="searchParam"></param>
+        /// <response code="204">
+        ///     Operation was successful.
+        /// </response>
+        /// <response code="400">
+        ///     Bad Request.
+        /// </response>
+        /// <response code = "500" >
+        ///     Internal Server Error.
+        /// </response>
+        [HttpGet("all")]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllProjectsAsync(
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] string searchParam = null,
+            CancellationToken ct = default)
+        {
+            var response = await _mediator.Send(new GetAllProjectsQueryParamter(
+                searchParam: searchParam,
+                pageNumber: pageNumber,
+                pageSize: pageSize));
+
+            if (response == null)
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Something went wrong." });
+
+            return Ok(response);
+        }
+
 
         /// <summary>
         ///     PUT: /api/CreateProject
