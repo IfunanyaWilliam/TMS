@@ -6,15 +6,6 @@
 
     public class UserTask
     {
-        public UserTask(
-            Guid id,
-            Guid userId,
-            IEnumerable<Task>? tasks)
-        {
-            Id = id;
-            UserId = userId;
-            Tasks = tasks;
-        }
         public Guid Id { get; set; }
 
         public Guid UserId { get; set; }

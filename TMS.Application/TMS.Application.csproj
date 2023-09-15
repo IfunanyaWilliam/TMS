@@ -10,10 +10,16 @@
     <Folder Include="Commands\UserTask\" />
     <Folder Include="Commands\User\" />
     <Folder Include="Commands\Task\" />
-    <Folder Include="Commands\Project\" />
+    <Folder Include="CommandHandlers\" />
+    <Folder Include="Queries\Project\" />
+    <Folder Include="QueryHandlers\" />
     <Folder Include="Queries\UserTask\" />
     <Folder Include="Queries\User\" />
     <Folder Include="Queries\Task\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.AspNetCore.Mvc" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>

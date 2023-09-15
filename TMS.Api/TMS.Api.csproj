@@ -7,17 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.AspNetCore.Mvc" Version="4.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Results\" />
-    <Folder Include="Parameters\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TMS.Application\TMS.Application.csproj" />
+    <ProjectReference Include="..\TMS.Infrastructure\TMS.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

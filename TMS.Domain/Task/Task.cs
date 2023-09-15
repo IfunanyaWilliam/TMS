@@ -28,7 +28,7 @@
 
         public Guid UserId { get; set; }
 
-        public User Owner { get; set; }
+        public User User { get; set; }
 
         public Guid ProjectId { get; set; }
 
