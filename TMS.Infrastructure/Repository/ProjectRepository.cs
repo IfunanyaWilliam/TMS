@@ -65,21 +65,27 @@
                 description: project.Description);
         }
 
-        public async Task<bool> CreateProjectAsyn(string name, string description)
+        public async Task<Project> CreateProjectAsyn(string name, string description)
         {
-            if(!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(description))
+            
+            var project = new Entities.Project
             {
-                var project = new Entities.Project
-                {
-                    Name = name,
-                    Description = description
-                };
+                Name = name,
+                Description = description
+            };
 
-                await _context.Projects.AddAsync(project);
-                return await _context.SaveChangesAsync() > 0;
+            await _context.Projects.AddAsync(project);
+            var result =  await _context.SaveChangesAsync();
+            
+            if(result > 0)
+            {
+                return new Project(
+                    id: project.Id,
+                    name: project.Name,
+                    description: project.Description);
             }
 
-            return false;
+            return null;
         }
 
         public async Task<bool> UpdateProjectAsync(Guid id, string name, string description)

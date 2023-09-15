@@ -13,7 +13,7 @@
 
         Task<Project> GetProjectByIdAsync(Guid id);
 
-        Task<bool> CreateProjectAsyn(string name, string description);
+        Task<Project> CreateProjectAsyn(string name, string description);
 
         Task<bool> UpdateProjectAsync(Guid id, string name, string description);
 

@@ -1,8 +1,9 @@
 ﻿namespace TMS.Application.Commands.Project
 {
     using MediatR;
+    using TMS.Domain.Project;
 
-    public class CreateProjectCommandParameter : IRequest<bool>
+    public class CreateProjectCommandParameter : IRequest<Project>
     {
         public CreateProjectCommandParameter(string name, string description)
         {

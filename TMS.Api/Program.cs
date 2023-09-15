@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using TMS.Application.Repository;
 using TMS.Infrastructure.DbContext;
@@ -13,15 +14,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
-
 //Add the DbContext to the builder
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(IMediatRHandler).Assembly));
+
 
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+
+var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
