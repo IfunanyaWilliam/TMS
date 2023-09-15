@@ -29,7 +29,7 @@
 
             if(!string.IsNullOrEmpty(searchParam))
             {
-                predicate = s => s.Name.ToLower() == searchParam.ToLower();
+                predicate = s => (s.Name.ToLower() == searchParam.ToLower() || s.IsPending == false);
             }
             else 
                 predicate = s => s.IsPending == false;
@@ -71,7 +71,8 @@
             var project = new Entities.Project
             {
                 Name = name,
-                Description = description
+                Description = description,
+                IsPending = false
             };
 
             await _context.Projects.AddAsync(project);
