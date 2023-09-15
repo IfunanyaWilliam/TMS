@@ -1,15 +1,21 @@
 ﻿namespace TMS.Application.Commands.Project
 {
     using MediatR;
+    using Repository;
 
-
-    internal class UpdateProjectCommandParameter : IRequest<bool>
+    public class UpdateProjectCommandParameter : IRequest<bool>, IMediatRHandler
     {
-        public UpdateProjectCommandParameter(string name, string description)
+        public UpdateProjectCommandParameter(
+            Guid id,
+            string name, 
+            string description)
         {
+            Id = id;
             Name = name;
             Description = description;
         }
+
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 

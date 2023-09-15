@@ -18,6 +18,8 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
+
+//IMediatRHandler interface is used to mark all Handlers as a MediatR type
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(IMediatRHandler).Assembly));
 
 
