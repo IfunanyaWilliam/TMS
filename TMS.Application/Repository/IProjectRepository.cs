@@ -15,8 +15,8 @@
 
         Task<Project> CreateProjectAsyn(string name, string description);
 
-        Task<bool> UpdateProjectAsync(Guid id, string name, string description);
+        Task<bool> UpdateProjectAsync(Guid id, string name, string description, ProjectStatus projectStatus);
 
-        Task<bool> DeleteProjectAsync(Guid id);
+        Task<bool> DeleteProjectAsync(Guid id, ProjectStatus projectStatus);
     }
 }

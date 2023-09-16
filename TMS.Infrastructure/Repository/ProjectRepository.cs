@@ -31,10 +31,10 @@
 
             if(!string.IsNullOrEmpty(searchParam))
                 predicate = s => ((s.ProjectStatus == ProjectStatus.Created || s.ProjectStatus == ProjectStatus.InProgress 
-                                             || s.ProjectStatus == ProjectStatus.Completed || s.ProjectStatus == ProjectStatus.Archived) 
+                                             || s.ProjectStatus == ProjectStatus.Completed) 
                                         && (s.Name.ToLower() == searchParam.ToLower())) 
                                 || (s.ProjectStatus == ProjectStatus.Created || s.ProjectStatus == ProjectStatus.InProgress 
-                                        || s.ProjectStatus == ProjectStatus.Completed || s.ProjectStatus == ProjectStatus.Archived);
+                                        || s.ProjectStatus == ProjectStatus.Completed);
 
 
             var projects = await _context.Projects
@@ -157,7 +157,11 @@
             return null;
         }
 
-        public async Task<bool> UpdateProjectAsync(Guid id, string name, string description)
+        public async Task<bool> UpdateProjectAsync(
+                        Guid id, 
+                        string name, 
+                        string description,
+                        ProjectStatus projectStatus)
         {
             if (id == Guid.Empty || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(description))
                 return false;
@@ -169,22 +173,24 @@
 
             existingProject.Name = name ?? existingProject.Name;
             existingProject.Description = description ?? existingProject.Description;
+            existingProject.ProjectStatus = projectStatus;
 
             _context.Update(existingProject);
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeleteProjectAsync(Guid id)
+        public async Task<bool> DeleteProjectAsync(Guid id, ProjectStatus projectStatus)
         {
             if(id == Guid.Empty)
                 return false;
 
             var existingProject = await _context.Projects.FirstOrDefaultAsync(p => p.Id == id);
 
-            if (existingProject != null)
+            if (existingProject == null)
                 return false;
 
-             _context.Projects.Remove(existingProject);
+            existingProject.ProjectStatus = projectStatus;
+            _context.Update(existingProject);
             return await _context.SaveChangesAsync() > 0;
         }
     }

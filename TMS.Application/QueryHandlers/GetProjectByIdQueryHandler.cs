@@ -16,11 +16,11 @@
             _projectRepository = projectRepository;
         }
 
-        public Task<Project> Handle(
+        public async Task<Project> Handle(
             GetProjectByIdQueryParameter request, 
             CancellationToken cancellationToken)
         {
-            return _projectRepository.GetProjectByIdAsync(request.Id);
+            return await _projectRepository.GetProjectByIdAsync(request.Id);
         }
     }
 }
