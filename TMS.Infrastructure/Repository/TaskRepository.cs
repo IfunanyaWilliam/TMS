@@ -28,12 +28,11 @@
             Expression<Func<Entities.AppTask, bool>> predicate = null;
 
             if (!string.IsNullOrEmpty(searchParam))
-            {
-                predicate = s => s.Title.ToLower() == searchParam.ToLower();
-            }
-            else
-                predicate = s => s.Status.ToString() != "Pending";
+                predicate = s => (s.Status == Status.Completed || s.Status == Status.InProgress || s.Status == Status.Pending) 
+                                    && (s.Title.ToLower() == searchParam.ToLower())
+                                  || (s.Status == Status.Completed || s.Status == Status.InProgress || s.Status == Status.Pending);
 
+           
             var tasks = await _context.AppTasks
                 .Where(predicate)
                 .OrderByDescending(n => n.Title)
@@ -46,7 +45,6 @@
 
             return tasks.Select(t => new AppTask(
                 id: t.Id,
-                userId: t.UserId,
                 projectId: t.ProjectId,
                 title: t.Title,
                 description: t.Description,
@@ -67,7 +65,6 @@
 
             return new AppTask(
                 id: task.Id,
-                userId: task.UserId,
                 projectId: task.ProjectId,
                 title: task.Title,
                 description: task.Description,
@@ -90,7 +87,6 @@
 
             var task = new Entities.AppTask
             {
-                UserId = UserId,
                 ProjectId = projectId,
                 Title = title,
                 Description = description,

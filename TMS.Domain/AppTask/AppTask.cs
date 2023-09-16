@@ -1,13 +1,12 @@
 ﻿namespace TMS.Domain.AppTask
 {
     using System;
-    using User;
     using Project;
+
     public class AppTask
     {
         public AppTask(
             Guid id,
-            Guid userId,
             Guid projectId,
             string title,
             string description,
@@ -16,7 +15,6 @@
             Status status)
         {
             Id = id;
-            UserId = userId;
             ProjectId = projectId;
             Title = title;
             Description = description;
@@ -25,10 +23,6 @@
             Status = status;
         }
         public Guid Id { get; set; }
-
-        public Guid UserId { get; set; }
-
-        public User User { get; set; }
 
         public Guid ProjectId { get; set; }
 

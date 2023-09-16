@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Commands\UserTask\" />
     <Folder Include="Commands\User\" />
-    <Folder Include="Commands\Task\" />
     <Folder Include="Queries\UserTask\" />
     <Folder Include="Queries\User\" />
     <Folder Include="Queries\Task\" />

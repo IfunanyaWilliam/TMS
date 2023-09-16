@@ -170,7 +170,7 @@
             if (!ValidateGuid.IsValidGuid(parameters.Id.ToString()))
                 return BadRequest("UpdateProjectAsync: id is not a valid Guid");
 
-            var response = await _mediator.Send(parameters);
+            var response = await _mediator.Send(parameters, ct);
 
             if (response == false)
                 return StatusCode(StatusCodes.Status500InternalServerError, 

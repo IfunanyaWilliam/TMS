@@ -23,7 +23,8 @@
             return await _projectRepository.UpdateProjectAsync(
                 id: request.Id,
                 name: request.Name,
-                description: request.Description);
+                description: request.Description,
+                projectStatus: request.ProjectStatus);
         }
     }
 }

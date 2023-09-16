@@ -63,10 +63,9 @@
                         id: project.Id,
                         name: project.Name,
                         description: project.Description,
-                        projectStatus: ProjectStatus.Created,
+                        projectStatus: project.ProjectStatus,
                         tasks: project.AppTasks.Select(t => new AppTask(
                             id: t.Id,
-                            userId: t.UserId,
                             projectId: t.ProjectId,
                             title: t.Title,
                             description: t.Description,
@@ -80,7 +79,7 @@
                         id: project.Id,
                         name: project.Name,
                         description: project.Description,
-                        projectStatus: ProjectStatus.Created,
+                        projectStatus: project.ProjectStatus,
                         tasks: Enumerable.Empty<AppTask>()));
                    
                 }
@@ -91,9 +90,6 @@
 
         public async Task<Project> GetProjectByIdAsync(Guid id)
         {
-            //if (id == Guid.Empty)
-            //    return null;
-
             var project = await _context.Projects
                 .Include(p => p.AppTasks)        
                 .FirstOrDefaultAsync(i => i.Id == id);
@@ -109,10 +105,9 @@
                     id: project.Id,
                     name: project.Name,
                     description: project.Description,
-                    projectStatus: ProjectStatus.Created,
+                    projectStatus: project.ProjectStatus,
                     tasks: project.AppTasks.Select(t => new AppTask(
                         id: t.Id,
-                        userId: t.UserId,
                         projectId: t.ProjectId,
                         title: t.Title,
                         description: t.Description,
@@ -124,7 +119,7 @@
                             id: project.Id,
                             name: project.Name,
                             description: project.Description,
-                            projectStatus: ProjectStatus.Created,
+                            projectStatus: project.ProjectStatus,
                             tasks: Enumerable.Empty<AppTask>());
 
             return null;
@@ -132,7 +127,6 @@
 
         public async Task<Project> CreateProjectAsyn(string name, string description)
         {
-            
             var project = new Entities.Project
             {
                 Name = name,
@@ -150,7 +144,7 @@
                     id: project.Id,
                     name: project.Name,
                     description: project.Description,
-                    projectStatus: ProjectStatus.Created,
+                    projectStatus: project.ProjectStatus,
                     tasks: Enumerable.Empty<AppTask>());
             }
 
