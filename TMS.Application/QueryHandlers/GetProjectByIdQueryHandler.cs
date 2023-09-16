@@ -7,7 +7,7 @@
     using TMS.Application.Repository;
     using TMS.Domain.Project;
 
-    public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQueryParameter, Project>
+    public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQueryParameter, Project>, IMediatRHandler
     {
         private readonly IProjectRepository _projectRepository;
 
@@ -20,7 +20,7 @@
             GetProjectByIdQueryParameter request, 
             CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return _projectRepository.GetProjectByIdAsync(request.Id);
         }
     }
 }

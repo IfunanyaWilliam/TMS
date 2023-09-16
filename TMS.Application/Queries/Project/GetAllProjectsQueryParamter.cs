@@ -20,6 +20,6 @@
 
         public int PageSize { get; }
 
-        public string SearchParam { get; }
+        public string SearchParam { get; }   //Name of Project
     }
 }

@@ -30,62 +30,104 @@
             Expression<Func<Entities.Project, bool>> predicate = null;
 
             if(!string.IsNullOrEmpty(searchParam))
-            {
-                predicate = s => (s.Name.ToLower() == searchParam.ToLower() || s.IsPending == false);
-            }
-            else 
-                predicate = s => s.IsPending == false;
+                predicate = s => ((s.ProjectStatus == ProjectStatus.Created || s.ProjectStatus == ProjectStatus.InProgress 
+                                             || s.ProjectStatus == ProjectStatus.Completed || s.ProjectStatus == ProjectStatus.Archived) 
+                                        && (s.Name.ToLower() == searchParam.ToLower())) 
+                                || (s.ProjectStatus == ProjectStatus.Created || s.ProjectStatus == ProjectStatus.InProgress 
+                                        || s.ProjectStatus == ProjectStatus.Completed || s.ProjectStatus == ProjectStatus.Archived);
+
 
             var projects = await _context.Projects
                 .Where(predicate)
+                .Include(t => t.AppTasks)
                 .OrderByDescending(n => n.Name)
-                .Take(pageSize)
                 .Skip(skip)
+                .Take(pageSize)
                 .ToListAsync();
 
-            if(!projects.Any() || projects == null)
+            if(projects.Count <= 0 || projects == null)
             {
                 return null;
             }
 
-            return projects.Select(p => new Project(
-                id: p.Id,
-                name: p.Name,
-                description: p.Description,
-                tasks: p.AppTasks.Select(t => new AppTask(
-                    id: t.Id,
-                    userId: t.UserId,
-                    projectId: t.ProjectId,
-                    title: t.Title,
-                    description: t.Description,
-                    dueDate: t.DueDate,
-                    priority: t.Priority,
-                    status: t.Status))));
+            List<Project> newProject = new List<Project>();
+
+            for(int i = 0; i < projects.Count; i++)
+            {
+                var project = projects[i];  
+                var AppTaskIsNull = project.AppTasks.Any();
+
+                if (AppTaskIsNull)
+                {
+                    newProject.Add(new Project(
+                        id: project.Id,
+                        name: project.Name,
+                        description: project.Description,
+                        projectStatus: ProjectStatus.Created,
+                        tasks: project.AppTasks.Select(t => new AppTask(
+                            id: t.Id,
+                            userId: t.UserId,
+                            projectId: t.ProjectId,
+                            title: t.Title,
+                            description: t.Description,
+                            dueDate: t.DueDate,
+                            priority: t.Priority,
+                            status: t.Status))));
+                }
+                else
+                {
+                    newProject.Add(new Project(
+                        id: project.Id,
+                        name: project.Name,
+                        description: project.Description,
+                        projectStatus: ProjectStatus.Created,
+                        tasks: Enumerable.Empty<AppTask>()));
+                   
+                }
+            }
+
+            return newProject;
         }
 
         public async Task<Project> GetProjectByIdAsync(Guid id)
         {
-            if (id == Guid.Empty)
-                return null;
+            //if (id == Guid.Empty)
+            //    return null;
 
             var project = await _context.Projects
                 .Include(p => p.AppTasks)        
                 .FirstOrDefaultAsync(i => i.Id == id);
 
 
-            return new Project(
-                id: project.Id,
-                name: project.Name,
-                description: project.Description,
-                tasks: project.AppTasks.Select(t => new AppTask(
-                    id: t.Id,
-                    userId: t.UserId,
-                    projectId: t.ProjectId,
-                    title: t.Title,
-                    description: t.Description,
-                    dueDate: t.DueDate,
-                    priority: t.Priority,
-                    status: t.Status)));
+            if (project == null)
+                return null;
+
+            var AppTaskIsNull = project.AppTasks.Any();
+
+            if (AppTaskIsNull)
+                return new Project(
+                    id: project.Id,
+                    name: project.Name,
+                    description: project.Description,
+                    projectStatus: ProjectStatus.Created,
+                    tasks: project.AppTasks.Select(t => new AppTask(
+                        id: t.Id,
+                        userId: t.UserId,
+                        projectId: t.ProjectId,
+                        title: t.Title,
+                        description: t.Description,
+                        dueDate: t.DueDate,
+                        priority: t.Priority,
+                        status: t.Status)));
+            else
+                return new Project(
+                            id: project.Id,
+                            name: project.Name,
+                            description: project.Description,
+                            projectStatus: ProjectStatus.Created,
+                            tasks: Enumerable.Empty<AppTask>());
+
+            return null;
         }
 
         public async Task<Project> CreateProjectAsyn(string name, string description)
@@ -95,7 +137,7 @@
             {
                 Name = name,
                 Description = description,
-                IsPending = false,
+                ProjectStatus = ProjectStatus.Created,
                 AppTasks = null
             };
 
@@ -108,6 +150,7 @@
                     id: project.Id,
                     name: project.Name,
                     description: project.Description,
+                    projectStatus: ProjectStatus.Created,
                     tasks: Enumerable.Empty<AppTask>());
             }
 

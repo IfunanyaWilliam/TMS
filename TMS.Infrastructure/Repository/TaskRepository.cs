@@ -32,9 +32,9 @@
                 predicate = s => s.Title.ToLower() == searchParam.ToLower();
             }
             else
-                predicate = null;
+                predicate = s => s.Status.ToString() != "Pending";
 
-            var tasks = await _context.Tasks
+            var tasks = await _context.AppTasks
                 .Where(predicate)
                 .OrderByDescending(n => n.Title)
                 .Take(pageSize)
@@ -44,7 +44,7 @@
             if(tasks == null)
                 return Enumerable.Empty<AppTask>();
 
-            return tasks.Select(t => new Task(
+            return tasks.Select(t => new AppTask(
                 id: t.Id,
                 userId: t.UserId,
                 projectId: t.ProjectId,
@@ -60,12 +60,12 @@
             if (id == Guid.Empty)
                 return null;
 
-            var task =  await _context.Tasks.FindAsync(id);
+            var task =  await _context.AppTasks.FindAsync(id);
 
             if(task == null)
                 return null;
 
-            return new Task(
+            return new AppTask(
                 id: task.Id,
                 userId: task.UserId,
                 projectId: task.ProjectId,
@@ -99,7 +99,7 @@
                 Status = status
             };
 
-            await _context.Tasks.AddAsync(task);
+            await _context.AppTasks.AddAsync(task);
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -113,7 +113,7 @@
             if(id == Guid.Empty) 
                 return false;
 
-            var existingTask = await _context.Tasks.FindAsync(id);
+            var existingTask = await _context.AppTasks.FindAsync(id);
 
             if(existingTask == null)
                 return false;
@@ -134,12 +134,12 @@
             if(id == Guid.Empty)
                 return false;
 
-            var existingTask = await _context.Tasks.FindAsync(id);
+            var existingTask = await _context.AppTasks.FindAsync(id);
 
             if (existingTask != null) //To DO => return not found
                 return false;
 
-            _context.Tasks.Remove(existingTask);
+            _context.AppTasks.Remove(existingTask);
             return await _context.SaveChangesAsync() > 0;
         }
     }
