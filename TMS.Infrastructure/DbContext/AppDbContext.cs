@@ -1,8 +1,8 @@
 ﻿namespace TMS.Infrastructure.DbContext
 {
     using Microsoft.EntityFrameworkCore;
-    using Entities;
     using Microsoft.Extensions.Configuration;
+    using Entities;
 
     public class AppDbContext : DbContext
     {
@@ -34,9 +34,12 @@
             modelBuilder.Entity<UserTask>()
                         .HasOne(u => u.User);
 
-            modelBuilder.Entity<Task>()
+            modelBuilder.Entity<AppTask>()
                         .HasOne(p => p.Project)
-                        .WithMany(t => t.Tasks);
+                        .WithMany(t => t.AppTasks);
+
+            modelBuilder.Entity<Project>()
+                        .HasMany(p => p.AppTasks);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

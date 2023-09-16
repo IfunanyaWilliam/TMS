@@ -6,7 +6,7 @@
     using System.Linq.Expressions;
     using Microsoft.EntityFrameworkCore;
     using DbContext;
-    using Domain.Task;
+    using Domain.AppTask;
     using TMS.Application.Repository;
 
     public class TaskRepository : ITaskRepository
@@ -18,14 +18,14 @@
             _context = context;
         }
 
-        public async Task<IEnumerable<Task>> GetAllTaskAsync(
+        public async Task<IEnumerable<AppTask>> GetAllTaskAsync(
             int pageNumber,
             int pageSize,
             string searchParam)
         {
             var skip = (pageNumber - 1) * pageSize;
 
-            Expression<Func<Entities.Task, bool>> predicate = null;
+            Expression<Func<Entities.AppTask, bool>> predicate = null;
 
             if (!string.IsNullOrEmpty(searchParam))
             {
@@ -42,7 +42,7 @@
                 .ToListAsync();
 
             if(tasks == null)
-                return Enumerable.Empty<Task>();
+                return Enumerable.Empty<AppTask>();
 
             return tasks.Select(t => new Task(
                 id: t.Id,
@@ -55,7 +55,7 @@
                 status: t.Status));
         }
 
-        public async Task<Task> GetTaskByIdAsync(Guid id)
+        public async Task<AppTask> GetTaskByIdAsync(Guid id)
         {
             if (id == Guid.Empty)
                 return null;
@@ -88,7 +88,7 @@
             if(UserId == Guid.Empty || projectId == Guid.Empty || string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description))
                 return false;
 
-            var task = new Entities.Task
+            var task = new Entities.AppTask
             {
                 UserId = UserId,
                 ProjectId = projectId,

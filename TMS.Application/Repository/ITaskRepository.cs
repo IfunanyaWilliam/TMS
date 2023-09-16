@@ -2,16 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
-    using TMS.Domain.Task;
+    using TMS.Domain.AppTask;
 
     public interface ITaskRepository
     {
-        Task<IEnumerable<Task>> GetAllTaskAsync(
+        Task<IEnumerable<AppTask>> GetAllTaskAsync(
             int pageNumber,
             int pageSize,
             string searchParam);
 
-        Task<Task> GetTaskByIdAsync(Guid id);
+        Task<AppTask> GetTaskByIdAsync(Guid id);
 
         Task<bool> CreateTaskAsync(
             Guid UserId,

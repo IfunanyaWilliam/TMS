@@ -7,7 +7,8 @@
     using System.Threading.Tasks;
     using TMS.Domain.Project;
 
-    public class GetAllProjectsQueryHandler : IRequestHandler<GetAllProjectsQueryParamter, IEnumerable<Project>>
+    public class GetAllProjectsQueryHandler 
+                        : IRequestHandler<GetAllProjectsQueryParamter, IEnumerable<Project>>, IMediatRHandler
     {
         private readonly IProjectRepository _projectRepository;
 

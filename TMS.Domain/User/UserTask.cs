@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Task;
+    using AppTask;
 
     public class UserTask
     {
@@ -12,6 +12,6 @@
 
         public User User { get; set; }
 
-        public IEnumerable<Task>? Tasks { get; set; }
+        public IEnumerable<AppTask>? Tasks { get; set; }
     }
 }

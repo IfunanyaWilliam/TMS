@@ -7,6 +7,8 @@
     using System.Linq.Expressions;
     using DbContext;
     using Domain.Project;
+    using Domain.AppTask;
+    using System.Linq;
     using Application.Repository;
 
     public class ProjectRepository : IProjectRepository
@@ -49,7 +51,16 @@
             return projects.Select(p => new Project(
                 id: p.Id,
                 name: p.Name,
-                description: p.Description));
+                description: p.Description,
+                tasks: p.AppTasks.Select(t => new AppTask(
+                    id: t.Id,
+                    userId: t.UserId,
+                    projectId: t.ProjectId,
+                    title: t.Title,
+                    description: t.Description,
+                    dueDate: t.DueDate,
+                    priority: t.Priority,
+                    status: t.Status))));
         }
 
         public async Task<Project> GetProjectByIdAsync(Guid id)
@@ -57,12 +68,24 @@
             if (id == Guid.Empty)
                 return null;
 
-            var project = await _context.Projects.FindAsync(id);
+            var project = await _context.Projects
+                .Include(p => p.AppTasks)        
+                .FirstOrDefaultAsync(i => i.Id == id);
+
 
             return new Project(
                 id: project.Id,
                 name: project.Name,
-                description: project.Description);
+                description: project.Description,
+                tasks: project.AppTasks.Select(t => new AppTask(
+                    id: t.Id,
+                    userId: t.UserId,
+                    projectId: t.ProjectId,
+                    title: t.Title,
+                    description: t.Description,
+                    dueDate: t.DueDate,
+                    priority: t.Priority,
+                    status: t.Status)));
         }
 
         public async Task<Project> CreateProjectAsyn(string name, string description)
@@ -72,7 +95,8 @@
             {
                 Name = name,
                 Description = description,
-                IsPending = false
+                IsPending = false,
+                AppTasks = null
             };
 
             await _context.Projects.AddAsync(project);
@@ -83,7 +107,8 @@
                 return new Project(
                     id: project.Id,
                     name: project.Name,
-                    description: project.Description);
+                    description: project.Description,
+                    tasks: Enumerable.Empty<AppTask>());
             }
 
             return null;

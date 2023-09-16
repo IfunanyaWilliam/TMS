@@ -1,11 +1,11 @@
-﻿namespace TMS.Domain.Task
+﻿namespace TMS.Domain.AppTask
 {
     using System;
     using User;
     using Project;
-    public class Task
+    public class AppTask
     {
-        public Task(
+        public AppTask(
             Guid id,
             Guid userId,
             Guid projectId,

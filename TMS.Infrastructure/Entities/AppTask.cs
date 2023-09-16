@@ -1,9 +1,9 @@
 ﻿namespace TMS.Infrastructure.Entities
 {
     using System;
-    using Domain.Task;
+    using TMS.Domain.AppTask;
 
-    public class Task
+    public class AppTask
     {
         public Guid Id { get; set; }
 
