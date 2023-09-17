@@ -101,14 +101,14 @@
 
 
         /// <summary>
-        ///     PUT: /api/CreateProject
+        ///     POST: /api/CreateProject
         /// </summary>
         /// <remarks>
-        ///     Updates a project
+        ///     Creates a project
         /// </remarks>
         /// <param name ="parameters"></param>
         /// <param name ="ct"></param>
-        /// <response code ="204">
+        /// <response code ="200">
         ///     Operation was successful.
         /// </response>
         /// <response code="400">

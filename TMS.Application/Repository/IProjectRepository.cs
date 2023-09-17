@@ -17,6 +17,8 @@
 
         Task<bool> UpdateProjectAsync(Guid id, string name, string description, ProjectStatus projectStatus);
 
+        Task<bool> AddAppTaskToProject(Guid projectId, Guid appTaskId);
+
         Task<bool> DeleteProjectAsync(Guid id, ProjectStatus projectStatus);
     }
 }

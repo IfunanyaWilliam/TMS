@@ -17,7 +17,7 @@
 
         public ProjectRepository(AppDbContext context)
         {
-                _context = context;
+            _context = context;
         }
 
         public async Task<IEnumerable<Project>> GetAllProjectsAsyn(
@@ -170,6 +170,24 @@
             existingProject.ProjectStatus = projectStatus;
 
             _context.Update(existingProject);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> AddAppTaskToProject(Guid projectId, Guid appTaskId)
+        {
+            var project = await _context.Projects.FindAsync(projectId);
+            if(project == null) 
+                return false;
+
+            var appTask = await _context.AppTasks.FindAsync(appTaskId);
+            if (appTask == null)
+                return false;
+
+            if(project.AppTasks.Where(i => i.Id == appTaskId).Any()) //Implement custom message
+                return false;
+
+            project.AppTasks.Add(appTask);
+            _context.Update(project);
             return await _context.SaveChangesAsync() > 0;
         }
 
