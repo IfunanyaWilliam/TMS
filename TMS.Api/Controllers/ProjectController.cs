@@ -220,7 +220,7 @@
         ///     PUT: /api/project/removeAppTaskFromProject
         /// </summary>
         /// <remarks>
-        ///     Adds AppTask to a project
+        ///     Removes AppTask from a project
         /// </remarks>
         /// <param name ="parameters"></param>
         /// <param name ="ct"></param>
@@ -257,7 +257,7 @@
         ///     DELETE: /api/project
         /// </summary>
         /// <remarks>
-        ///     Updates a project
+        ///     Archives a project 
         /// </remarks>
         /// <param name="parameters"></param>
         /// <param name="ct"></param>
@@ -282,10 +282,10 @@
                 return BadRequest("Project parameters are required");
 
             if (parameters.Id == Guid.Empty)
-                return BadRequest("Professional id is required");
+                return BadRequest("Project id is required");
 
             if (!ValidateGuid.IsValidGuid(parameters.Id.ToString()))
-                return BadRequest("DeleteProjectAsync: id is not a valid Guid");
+                return BadRequest($"DeleteProjectAsync: {parameters.Id} is not a valid Guid");
 
             var response = await _mediator.Send(parameters);
 

@@ -139,7 +139,7 @@
 
             var existingTask = await _context.AppTasks.FindAsync(id);
 
-            if (existingTask != null) //To DO => return not found
+            if (existingTask == null) //To DO => return not found
                 return false;
 
             _context.AppTasks.Remove(existingTask);
