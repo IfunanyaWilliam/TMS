@@ -233,7 +233,7 @@
         /// <response code = "500" >
         ///     Internal Server Error.
         /// </response>
-        [HttpPut("addAppTaskToProject")]
+        [HttpPut("project/removeAppTaskFromProject")]
         [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

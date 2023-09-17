@@ -14,7 +14,6 @@
         Task<AppTask> GetTaskByIdAsync(Guid id);
 
         Task<AppTask> CreateTaskAsync(
-            Guid projectId,
             string title,
             string description,
             DateTime dueDate,

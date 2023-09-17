@@ -3,21 +3,25 @@
     using MediatR;
     using Domain.AppTask;
 
-    public class CreateAppTaskCommandParameter : IRequest<AppTask>
+    public class UpdateAppTaskCommandParameter : IRequest<bool>
     {
-        public CreateAppTaskCommandParameter(
+        public UpdateAppTaskCommandParameter(
+            Guid id,
             string title,
             string description,
             DateTime dueDate,
             Priority priority,
             Status status)
         {
+            Id = id;
             Title = title;
             Description = description;
             DueDate = dueDate;
             Priority = priority;
             Status = status;
         }
+
+        public Guid Id { get; }
         public string Title { get; }
 
         public string Description { get; }

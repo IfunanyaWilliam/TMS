@@ -66,7 +66,6 @@
                         projectStatus: project.ProjectStatus,
                         tasks: project.AppTasks.Select(t => new AppTask(
                             id: t.Id,
-                            projectId: t.ProjectId,
                             title: t.Title,
                             description: t.Description,
                             dueDate: t.DueDate,
@@ -108,7 +107,6 @@
                     projectStatus: project.ProjectStatus,
                     tasks: project.AppTasks.Select(t => new AppTask(
                         id: t.Id,
-                        projectId: t.ProjectId,
                         title: t.Title,
                         description: t.Description,
                         dueDate: t.DueDate,

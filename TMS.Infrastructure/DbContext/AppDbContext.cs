@@ -32,11 +32,11 @@
                         .HasMany(t => t.Tasks);
 
             modelBuilder.Entity<UserTask>()
-                        .HasOne(u => u.User);
-
-            modelBuilder.Entity<AppTask>()
-                        .HasOne(p => p.Project)
-                        .WithMany(t => t.AppTasks);
+                        .HasOne(u => u.User)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
             modelBuilder.Entity<Project>()
                         .HasMany(p => p.AppTasks);

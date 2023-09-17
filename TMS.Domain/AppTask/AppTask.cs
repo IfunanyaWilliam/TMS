@@ -7,7 +7,6 @@
     {
         public AppTask(
             Guid id,
-            Guid projectId,
             string title,
             string description,
             DateTime dueDate,
@@ -15,7 +14,6 @@
             Status status)
         {
             Id = id;
-            ProjectId = projectId;
             Title = title;
             Description = description;
             DueDate = dueDate;
@@ -23,10 +21,6 @@
             Status = status;
         }
         public Guid Id { get; set; }
-
-        public Guid ProjectId { get; set; }
-
-        public Project Project { get; set; }
 
         public string Title { get; set; }
 

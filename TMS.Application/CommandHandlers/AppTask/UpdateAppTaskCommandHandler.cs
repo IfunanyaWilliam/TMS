@@ -5,23 +5,23 @@
     using System.Threading.Tasks;
     using Commands.AppTask;
     using Repository;
-    using Domain.AppTask;
 
-    public class CreateAppTaskCommandHandler
-                : IRequestHandler<CreateAppTaskCommandParameter, AppTask>, IMediatRHandler
+    public class UpdateAppTaskCommandHandler
+                : IRequestHandler<UpdateAppTaskCommandParameter, bool>, IMediatRHandler
     {
         private readonly IAppTaskRepository _appTaskRepository;
 
-        public CreateAppTaskCommandHandler(IAppTaskRepository appTaskRepository)
+        public UpdateAppTaskCommandHandler(IAppTaskRepository appTaskRepository)
         {
             _appTaskRepository = appTaskRepository;
         }
 
-        public Task<AppTask> Handle(
-                    CreateAppTaskCommandParameter request, 
-                    CancellationToken cancellationToken)
+        public async Task<bool> Handle(
+                        UpdateAppTaskCommandParameter request, 
+                        CancellationToken cancellationToken)
         {
-            return _appTaskRepository.CreateTaskAsync(
+            return await _appTaskRepository.UpdateTaskAsync(
+                id: request.Id,
                 title: request.Title,
                 description: request.Description,
                 dueDate: request.DueDate,

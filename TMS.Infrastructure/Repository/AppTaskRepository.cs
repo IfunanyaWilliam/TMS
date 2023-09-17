@@ -45,7 +45,6 @@
 
             return tasks.Select(t => new AppTask(
                 id: t.Id,
-                projectId: t.ProjectId,
                 title: t.Title,
                 description: t.Description,
                 dueDate: t.DueDate,
@@ -65,7 +64,6 @@
 
             return new AppTask(
                 id: task.Id,
-                projectId: task.ProjectId,
                 title: task.Title,
                 description: task.Description,
                 dueDate: task.DueDate,
@@ -74,7 +72,6 @@
         }
 
         public async Task<AppTask> CreateTaskAsync(
-            Guid projectId,
             string title,
             string description,
             DateTime dueDate,
@@ -82,12 +79,11 @@
             Status status)
         {
             //TO DO => Add a custom error message
-            if(projectId == Guid.Empty || string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description))
+            if(string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description))
                 return null;
 
             var task = new Entities.AppTask
             {
-                ProjectId = projectId,
                 Title = title,
                 Description = description,
                 DueDate = dueDate,
@@ -101,7 +97,6 @@
             if(result > 0)
                 return new AppTask(
                     id: task.Id,
-                    projectId: task.ProjectId,
                     title: task.Title,
                     description: task.Description,
                     dueDate: task.DueDate,
