@@ -183,10 +183,28 @@
             if (appTask == null)
                 return false;
 
-            if(project.AppTasks.Where(i => i.Id == appTaskId).Any()) //Implement custom message
+            if(!project.AppTasks.Where(i => i.Id == appTaskId).Any()) //Implement custom message that says, Project already contains the task
                 return false;
 
             project.AppTasks.Add(appTask);
+            _context.Update(project);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> RemoveAppTaskFromProject(Guid projectId, Guid appTaskId)
+        {
+            var project = await _context.Projects.FindAsync(projectId);
+            if (project == null)
+                return false;
+
+            var appTask = await _context.AppTasks.FindAsync(appTaskId);
+            if (appTask == null)
+                return false;
+
+            if (!project.AppTasks.Where(i => i.Id == appTaskId).Any()) //Implement custom message that says, Task is not contained in Project
+                return false;
+
+            project.AppTasks.Remove(appTask);
             _context.Update(project);
             return await _context.SaveChangesAsync() > 0;
         }

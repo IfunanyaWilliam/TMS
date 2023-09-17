@@ -1,9 +1,10 @@
 ﻿namespace TMS.Application.Commands.Project
 {
     using MediatR;
-    public class AddAppTaskToProjectCommandParameter : IRequest<bool>
+
+    public class RemoveAppTaskFromProjectCommandParameter : IRequest<bool>
     {
-        public AddAppTaskToProjectCommandParameter(
+        public RemoveAppTaskFromProjectCommandParameter(
             Guid appTaskId,
             Guid projectId)
         {
