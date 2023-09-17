@@ -3,11 +3,12 @@
     using MediatR;
     using System.Threading;
     using System.Threading.Tasks;
-    using TMS.Application.Queries.Project;
-    using TMS.Application.Repository;
-    using TMS.Domain.Project;
+    using Queries.Project;
+    using Repository;
+    using Domain.Project;
 
-    public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQueryParameter, Project>, IMediatRHandler
+    public class GetProjectByIdQueryHandler 
+                       : IRequestHandler<GetProjectByIdQueryParameter, Project>, IMediatRHandler
     {
         private readonly IProjectRepository _projectRepository;
 
