@@ -3,9 +3,9 @@
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
     using Domain.AppTask;
-    using TMS.Application.Commands.AppTask;
-    using TMS.Application.Queries.Project;
-    using TMS.Application.Queries.AppTask;
+    using Application.Commands.AppTask;
+    using Application.Queries.AppTask;
+    using Validations;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -98,6 +98,49 @@
                 return BadRequest("AppTask could not be created");
 
             return Ok(response);
+        }
+
+        /// <summary>
+        ///     PUT: /api/appTask
+        /// </summary>
+        /// <remarks>
+        ///     Updates a appTask
+        /// </remarks>
+        /// <param name="parameters"></param>
+        /// <param name="ct"></param>
+        /// <response code="204">
+        ///     Operation was successful.
+        /// </response>
+        /// <response code="400">
+        ///     Bad Request.
+        /// </response>
+        /// <response code = "500" >
+        ///     Internal Server Error.
+        /// </response>
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateAppTaskAsync(
+            [FromBody] UpdateAppTaskCommandParameter parameters,
+            CancellationToken ct = default)
+        {
+            if (parameters == null)
+                return BadRequest("AppTask parameters are required");
+
+            if (parameters.Id == Guid.Empty)
+                return BadRequest("AppTask id is required");
+
+            if (!ValidateGuid.IsValidGuid(parameters.Id.ToString()))
+                return BadRequest($"UpdateAppTaskAsync: {parameters.Id} is not a valid Guid");
+
+            var response = await _mediator.Send(parameters, ct);
+
+            if (response == false)
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new { message = "Something went wrong. AppTask Could not be modified" });
+
+            return NoContent();
         }
     }
 }
