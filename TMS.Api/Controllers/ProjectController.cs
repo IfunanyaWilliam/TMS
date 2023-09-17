@@ -63,7 +63,7 @@
         ///     GET: /api/GetProject/Id
         /// </summary>
         /// <remarks>
-        ///     Get all projects
+        ///     Get a projects
         /// </remarks>
         /// <param name ="id" ></ param>
         /// <param name ="ct"></param>

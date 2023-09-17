@@ -7,12 +7,12 @@
     using System.Threading.Tasks;
     using System.Threading;
 
-    public class GetAppTaskQueryHandler
+    public class GetAppTaskByIdQueryHandler
                 : IRequestHandler<GetAppTaskByIdQueryParameter, AppTask>, IMediatRHandler
     {
         private readonly IAppTaskRepository _appTaskRepository;
 
-        public GetAppTaskQueryHandler(IAppTaskRepository appTaskRepository)
+        public GetAppTaskByIdQueryHandler(IAppTaskRepository appTaskRepository)
         {
             _appTaskRepository = appTaskRepository;
         }

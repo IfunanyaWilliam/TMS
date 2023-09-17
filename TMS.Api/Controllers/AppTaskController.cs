@@ -59,6 +59,45 @@
             return Ok(response);
         }
 
+        /// <summary>
+        ///     GET: /api/appTask/Id
+        /// </summary>
+        /// <remarks>
+        ///     Gets an AppTask
+        /// </remarks>
+        /// <param name ="id" ></ param>
+        /// <param name ="ct"></param>
+        /// <response code="204">
+        ///     Operation was successful.
+        /// </response>
+        /// <response code="400">
+        ///     Bad Request.
+        /// </response>
+        /// <response code = "500" >
+        ///     Internal Server Error.
+        /// </response>
+        [HttpGet("id")]
+        [ProducesResponseType(typeof(AppTask), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAppTaskByIdAsync(
+            [FromQuery] Guid id,
+            CancellationToken ct = default)
+        {
+            if (id == Guid.Empty)
+                return BadRequest("GetAppTaskByIdAsync: id should not be empty");
+
+            if (!ValidateGuid.IsValidGuid(id.ToString()))
+                return BadRequest($"GetAppTaskByIdAsync: {id} is not a valid Guid");
+
+            var response = await _mediator.Send(new GetAppTaskByIdQueryParameter(id: id), ct);
+
+            if (response == null)
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                        new { message = $"AppTask with ID: {id} Not Found." });
+
+            return Ok(response);
+        }
 
         /// <summary>
         ///     POST: /api/CreateAppTask
