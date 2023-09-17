@@ -24,7 +24,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(IMedi
 
 
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
-builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<IAppTaskRepository, AppTaskRepository>();
 
 var app = builder.Build();
 

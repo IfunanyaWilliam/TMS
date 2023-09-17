@@ -11,7 +11,7 @@
     <Folder Include="Commands\User\" />
     <Folder Include="Queries\UserTask\" />
     <Folder Include="Queries\User\" />
-    <Folder Include="Queries\Task\" />
+    <Folder Include="Queries\AppTask\" />
   </ItemGroup>
 
   <ItemGroup>

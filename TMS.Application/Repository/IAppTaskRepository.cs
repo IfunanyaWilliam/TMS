@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using TMS.Domain.AppTask;
 
-    public interface ITaskRepository
+    public interface IAppTaskRepository
     {
         Task<IEnumerable<AppTask>> GetAllTaskAsync(
             int pageNumber,
@@ -13,8 +13,7 @@
 
         Task<AppTask> GetTaskByIdAsync(Guid id);
 
-        Task<bool> CreateTaskAsync(
-            Guid UserId,
+        Task<AppTask> CreateTaskAsync(
             Guid projectId,
             string title,
             string description,

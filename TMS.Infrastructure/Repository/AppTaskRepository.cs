@@ -9,11 +9,11 @@
     using Domain.AppTask;
     using TMS.Application.Repository;
 
-    public class TaskRepository : ITaskRepository
+    public class AppTaskRepository : IAppTaskRepository
     {
         private readonly AppDbContext _context;
 
-        public TaskRepository(AppDbContext context)
+        public AppTaskRepository(AppDbContext context)
         {
             _context = context;
         }
@@ -73,8 +73,7 @@
                 status: task.Status);
         }
 
-        public async Task<bool> CreateTaskAsync(
-            Guid UserId,
+        public async Task<AppTask> CreateTaskAsync(
             Guid projectId,
             string title,
             string description,
@@ -82,8 +81,9 @@
             Priority priority,
             Status status)
         {
-            if(UserId == Guid.Empty || projectId == Guid.Empty || string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description))
-                return false;
+            //TO DO => Add a custom error message
+            if(projectId == Guid.Empty || string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description))
+                return null;
 
             var task = new Entities.AppTask
             {
@@ -96,7 +96,19 @@
             };
 
             await _context.AppTasks.AddAsync(task);
-            return await _context.SaveChangesAsync() > 0;
+            var result = await _context.SaveChangesAsync();
+
+            if(result > 0)
+                return new AppTask(
+                    id: task.Id,
+                    projectId: task.ProjectId,
+                    title: task.Title,
+                    description: task.Description,
+                    dueDate: task.DueDate,
+                    priority: task.Priority,
+                    status: task.Status);
+
+            return null;
         }
 
         public async Task<bool> UpdateTaskAsync(Guid id,
@@ -114,7 +126,7 @@
             if(existingTask == null)
                 return false;
 
-            existingTask.Title = title ?? existingTask.Title;
+            existingTask.Title = title ?? existingTask.Title ?? existingTask.Title;
             existingTask.Description = description ?? existingTask.Description;
             existingTask.DueDate = dueDate;
             existingTask.Priority = priority;
