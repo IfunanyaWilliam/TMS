@@ -1,4 +1,4 @@
-﻿namespace TMS.Application.QueryHandlers
+﻿namespace TMS.Application.QueryHandlers.Project
 {
     using MediatR;
     using System.Threading;
@@ -17,7 +17,7 @@
         }
 
         public async Task<Project> Handle(
-            GetProjectByIdQueryParameter request, 
+            GetProjectByIdQueryParameter request,
             CancellationToken cancellationToken)
         {
             return await _projectRepository.GetProjectByIdAsync(request.Id);

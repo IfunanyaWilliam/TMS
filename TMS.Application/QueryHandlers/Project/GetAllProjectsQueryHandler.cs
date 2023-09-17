@@ -1,4 +1,4 @@
-﻿namespace TMS.Application.QueryHandlers
+﻿namespace TMS.Application.QueryHandlers.Project
 {
     using MediatR;
     using Queries.Project;
@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
     using TMS.Domain.Project;
 
-    public class GetAllProjectsQueryHandler 
+    public class GetAllProjectsQueryHandler
                         : IRequestHandler<GetAllProjectsQueryParamter, IEnumerable<Project>>, IMediatRHandler
     {
         private readonly IProjectRepository _projectRepository;
@@ -18,7 +18,7 @@
         }
 
         public async Task<IEnumerable<Project>> Handle(
-                        GetAllProjectsQueryParamter request, 
+                        GetAllProjectsQueryParamter request,
                         CancellationToken cancellationToken)
         {
             return await _projectRepository.GetAllProjectsAsyn(
