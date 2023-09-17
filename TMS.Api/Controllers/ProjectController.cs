@@ -217,6 +217,43 @@
         }
 
         /// <summary>
+        ///     PUT: /api/project/removeAppTaskFromProject
+        /// </summary>
+        /// <remarks>
+        ///     Adds AppTask to a project
+        /// </remarks>
+        /// <param name ="parameters"></param>
+        /// <param name ="ct"></param>
+        /// <response code ="204">
+        ///     Operation was successful.
+        /// </response>
+        /// <response code="400">
+        ///     Bad Request.
+        /// </response>
+        /// <response code = "500" >
+        ///     Internal Server Error.
+        /// </response>
+        [HttpPut("addAppTaskToProject")]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> RemoveAppTaskFromProjectAsync(
+                    [FromBody] RemoveAppTaskFromProjectCommandParameter parameters,
+                    CancellationToken ct = default)
+        {
+            if (parameters.ProjectId == Guid.Empty || parameters.AppTaskId == Guid.Empty)
+                return BadRequest($"AddAppTaskToProjectAsync: Parameters {parameters.AppTaskId} and {parameters.ProjectId} are required");
+
+            var response = await _mediator.Send(parameters, ct);
+
+            if (response == false)
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new { message = "Something went wrong. AppTask could not be removed from Project" });
+
+            return NoContent();
+        }
+
+        /// <summary>
         ///     DELETE: /api/project
         /// </summary>
         /// <remarks>
