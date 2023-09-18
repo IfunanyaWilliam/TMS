@@ -17,11 +17,11 @@
             _appTaskRepository = appTaskRepository;
         }
 
-        public Task<AppTask> Handle(
+        public async Task<AppTask> Handle(
                     CreateAppTaskCommandParameter request, 
                     CancellationToken cancellationToken)
         {
-            return _appTaskRepository.CreateTaskAsync(
+            return await _appTaskRepository.CreateTaskAsync(
                 title: request.Title,
                 description: request.Description,
                 dueDate: request.DueDate,

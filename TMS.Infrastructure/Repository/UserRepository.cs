@@ -1,7 +1,6 @@
 ﻿namespace TMS.Infrastructure.Repository
 {
     using System;
-    using System.Collections.Generic;
     using DbContext;
     using Domain.User;
 
@@ -14,7 +13,7 @@
              _context = context;
         }
 
-        public async Task<bool> CreateUserAsync(
+        public async Task<User> CreateUserAsync(
             string firstName,
             string lastName,
             string email,
@@ -41,9 +40,19 @@
             };
 
             await _context.Users.AddAsync(user);
-            return await _context.SaveChangesAsync() > 0;
+            var result = await _context.SaveChangesAsync();
+
+            if(result > 0)
+            {
+                return new User(
+                    id: user.Id,
+                    firstName: user.FirstName,
+                    lastName: user.LastName,
+                    email: user.Email,
+                    password: user.Password);
+            }
+
+            return null;
         }
-
-
     }
 }
