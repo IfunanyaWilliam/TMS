@@ -3,8 +3,9 @@
     using System;
     using DbContext;
     using Domain.User;
+    using TMS.Application.Repository;
 
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly AppDbContext _context;
 
